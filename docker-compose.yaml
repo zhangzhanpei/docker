@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - F:/:/f
+    networks:
+      - lnmp
+    depends_on:
+      - php
+      - mysql
+
+  php:
+    build:
+      context: ./
+      dockerfile: ./php/Dockerfile
+    container_name: php
+    volumes:
+      - F:/:/f
+    networks:
+      - lnmp
+
+  mysql:
+    build:
+      context: ./
+      dockerfile: ./mysql/Dockerfile
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3306:3306
+    volumes:
+      - F:/:/f
+    networks:
+      - lnmp
+
+networks:
+  lnmp:
